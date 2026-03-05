@@ -1,73 +1,229 @@
-# Welcome to your Lovable project
+# 🎉 VibeMatch – Mood Based Hangout Platform
 
-## Project info
+VibeMatch is a **mood-driven social discovery platform** that helps users find activities, events, and people based on how they feel at the moment.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Instead of endlessly scrolling for things to do, users simply **select their current mood**, and the platform suggests **nearby events, activities, and hangout opportunities** that match that vibe.
 
-## How can I edit this code?
+The goal of VibeMatch is to **make social planning faster, more spontaneous, and more fun**, especially for environments like **college campuses and communities**.
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+# 🚀 Features
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🎭 Mood-Based Discovery
 
-Changes made via Lovable will be committed automatically to this repo.
+Users can select their current mood such as:
 
-**Use your preferred IDE**
+* 😌 Chill
+* 🎉 Party
+* 📚 Study
+* 🍔 Food Hunt
+* 🏋️ Workout
+* 🎮 Gaming
+* 🎬 Movie Night
+* 🌿 Outdoor
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+The platform then recommends **events and activities matching that mood**.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 📅 Event Creation
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Users can create events by specifying:
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+* Event title
+* Mood category
+* Location
+* Date and time
+* Maximum participants
+* Event description
 
-# Step 3: Install the necessary dependencies.
-npm i
+Events can be **public or private**.
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+---
+
+## 🗺️ Map-Based Event Discovery
+
+The application includes a **map interface** that displays nearby events using location markers.
+
+Users can:
+
+* Explore nearby hangouts
+* Filter events by mood
+* View event details
+* Join events instantly
+
+---
+
+## 💬 Real-Time Event Chat
+
+Each event contains a **dedicated chat room** where participants can:
+
+* Communicate with other attendees
+* Share plans and updates
+* Coordinate meetups
+
+---
+
+## 🗳️ Poll-Based Decision Making
+
+To help groups decide quickly, users can create polls inside event chats such as:
+
+* “Where should we go?”
+* “What time should we meet?”
+
+Participants vote and results update in real time.
+
+---
+
+# 🏗️ Tech Stack
+
+### Frontend
+
+* React
+* TailwindCSS
+* TypeScript
+
+### Backend (Optional / Future)
+
+* Node.js / Express or Laravel
+
+### Database
+
+* MongoDB / MySQL
+
+### Real-Time Communication
+
+* WebSockets / Socket.io
+
+### Integrations
+
+* Google Maps API
+
+---
+
+# 🧠 System Architecture
+
+```
+Users (Browser / Mobile)
+        │
+        ▼
+Frontend (React + Tailwind)
+        │
+        ▼
+Backend API (Node.js / Laravel)
+        │
+        ├── Authentication Service
+        ├── Event Management Service
+        ├── Chat Service
+        │
+        ▼
+Database (MongoDB / MySQL)
+```
+
+---
+
+# 📂 Project Structure
+
+```
+VibeMatch
+│
+├── public
+│   └── assets
+│
+├── src
+│   ├── components
+│   │   ├── MoodCard
+│   │   ├── EventCard
+│   │   ├── ChatBubble
+│   │   └── Sidebar
+│   │
+│   ├── pages
+│   │   ├── LandingPage
+│   │   ├── Dashboard
+│   │   ├── EventCreation
+│   │   ├── MapDiscovery
+│   │   └── Profile
+│   │
+│   ├── styles
+│   └── main.tsx
+│
+└── index.html
+```
+
+---
+
+# ⚙️ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/yourusername/vibematch.git
+```
+
+Navigate to the project folder
+
+```bash
+cd vibematch
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the development server
+
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The application will run on:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```
+http://localhost:5173
+```
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# 📸 Screenshots
 
-## What technologies are used for this project?
+Add screenshots of the following pages:
 
-This project is built with:
+1. Landing Page
+2. Dashboard
+3. Event Creation Page
+4. Map Discovery Page
+5. Event Chat Interface
+6. Profile Page
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
+# 🎯 Use Cases
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+* College students planning hangouts
+* Community event discovery
+* Study group coordination
+* Club meetups
+* Spontaneous social gatherings
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+# 🔮 Future Improvements
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+* AI-based mood prediction
+* Smart event recommendations
+* Push notifications
+* Mobile app version
+* Event rating and feedback system
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+---
+
+# 👨‍💻 Author
+
+Developed by **Team VibeMatch**
+
+---
+
+
