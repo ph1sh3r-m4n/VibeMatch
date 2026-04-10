@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -7,6 +8,9 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import EventCard from "@/components/EventCard";
 import DashboardLayout from "@/layouts/DashboardLayout";
+import { createEvent } from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
 const moodOptions = [
   { value: "Chill", emoji: "😌" }, { value: "Party", emoji: "🎉" }, { value: "Study", emoji: "📚" },
@@ -17,6 +21,19 @@ const moodOptions = [
 const CreateEvent = () => {
   const [form, setForm] = useState({ title: "", mood: "", location: "", date: "", maxParticipants: "20", description: "", isPublic: true });
   const selectedMood = moodOptions.find(m => m.value === form.mood);
+  const { token, username } = useAuth();
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    if (!form.title || !form.mood) return toast.error("Title and Mood are required");
+    try {
+      const data = await createEvent(form, token!);
+      toast.success("Event created!");
+      navigate(`/dashboard`);
+    } catch (e: any) {
+      toast.error(e.message);
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -59,7 +76,7 @@ const CreateEvent = () => {
               <Label>Description</Label>
               <Textarea placeholder="Tell people about your event..." className="rounded-xl mt-1 min-h-[100px]" value={form.description} onChange={e => setForm({...form, description: e.target.value})} />
             </div>
-            <Button variant="hero" size="lg" className="w-full rounded-2xl">Create Event 🎉</Button>
+            <Button onClick={handleSubmit} variant="hero" size="lg" className="w-full rounded-2xl">Create Event 🎉</Button>
           </div>
         </div>
 
@@ -72,7 +89,7 @@ const CreateEvent = () => {
             moodEmoji={selectedMood?.emoji || "✨"}
             location={form.location || "Location"}
             time={form.date ? new Date(form.date).toLocaleString() : "Date & Time"}
-            host="You"
+            host={username || "You"}
             participants={0}
             maxParticipants={parseInt(form.maxParticipants) || 20}
           />

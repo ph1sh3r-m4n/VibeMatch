@@ -1,8 +1,10 @@
 import { MapPin, Clock, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 interface EventCardProps {
+  id?: number;
   title: string;
   mood: string;
   moodEmoji: string;
@@ -13,7 +15,7 @@ interface EventCardProps {
   maxParticipants?: number;
 }
 
-const EventCard = ({ title, mood, moodEmoji, location, time, host, participants = 0, maxParticipants }: EventCardProps) => (
+const EventCard = ({ id, title, mood, moodEmoji, location, time, host, participants = 0, maxParticipants }: EventCardProps) => (
   <motion.div
     whileHover={{ y: -4 }}
     className="glass rounded-3xl p-5 hover-lift"
@@ -37,7 +39,9 @@ const EventCard = ({ title, mood, moodEmoji, location, time, host, participants 
         <p className="text-xs text-muted-foreground mt-1">{participants}/{maxParticipants} joined</p>
       </div>
     )}
-    <Button variant="hero" size="sm" className="w-full rounded-2xl">Join Event</Button>
+    <Link to={`/chat/${id || ''}`} className="w-full block">
+      <Button variant="hero" size="sm" className="w-full rounded-2xl">Join Event</Button>
+    </Link>
   </motion.div>
 );
 

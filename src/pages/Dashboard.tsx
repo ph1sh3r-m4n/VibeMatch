@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 import MoodCard from "@/components/MoodCard";
 import EventCard from "@/components/EventCard";
 import DashboardLayout from "@/layouts/DashboardLayout";
+import { fetchEvents } from "@/lib/api";
 
 const moods = [
   { emoji: "😌", label: "Chill", gradient: "bg-gradient-to-br from-blue-100 to-indigo-100" },
@@ -15,18 +17,13 @@ const moods = [
   { emoji: "🌿", label: "Outdoor", gradient: "bg-gradient-to-br from-lime-100 to-green-100" },
 ];
 
-const events = [
-  { title: "Chill Lofi Session", mood: "Chill", moodEmoji: "😌", location: "Campus Library Lawn", time: "Today, 5:00 PM", host: "Alex", participants: 8, maxParticipants: 15 },
-  { title: "Weekend Party Bash", mood: "Party", moodEmoji: "🎉", location: "Student Center", time: "Sat, 8:00 PM", host: "Maya", participants: 42, maxParticipants: 50 },
-  { title: "Study Group - Calculus", mood: "Study", moodEmoji: "📚", location: "Room 204, Science Hall", time: "Tomorrow, 2:00 PM", host: "Jordan", participants: 5, maxParticipants: 10 },
-  { title: "Taco Tuesday Hunt", mood: "Food Hunt", moodEmoji: "🍔", location: "Downtown Area", time: "Tue, 12:00 PM", host: "Sam", participants: 12, maxParticipants: 20 },
-  { title: "Morning Yoga", mood: "Workout", moodEmoji: "🏋️", location: "Central Park", time: "Daily, 7:00 AM", host: "Priya", participants: 18, maxParticipants: 25 },
-  { title: "Smash Bros Tournament", mood: "Gaming", moodEmoji: "🎮", location: "Gaming Lounge", time: "Fri, 6:00 PM", host: "Chris", participants: 14, maxParticipants: 16 },
-];
 
 const Dashboard = () => {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
-  const filtered = selectedMood ? events.filter(e => e.mood === selectedMood) : events;
+  const { data: events = [], isLoading } = useQuery({
+    queryKey: ['events', selectedMood],
+    queryFn: () => fetchEvents(selectedMood)
+  });
 
   return (
     <DashboardLayout>
@@ -47,13 +44,15 @@ const Dashboard = () => {
             {selectedMood ? `${selectedMood} Events` : "Suggested Events"}
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.map((e, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
+            {isLoading ? (
+              <p className="text-center text-muted-foreground py-12 col-span-full">Loading events...</p>
+            ) : events.map((e: any, i: number) => (
+              <motion.div key={e.id || i} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
                 <EventCard {...e} />
               </motion.div>
             ))}
           </div>
-          {filtered.length === 0 && (
+          {!isLoading && events.length === 0 && (
             <p className="text-center text-muted-foreground py-12">No events for this mood yet. Create one!</p>
           )}
         </section>

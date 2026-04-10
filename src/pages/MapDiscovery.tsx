@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import MapEventCard from "@/components/MapEventCard";
 import MoodCard from "@/components/MoodCard";
 import DashboardLayout from "@/layouts/DashboardLayout";
+import { fetchEvents } from "@/lib/api";
 
 const moods = [
   { emoji: "😌", label: "Chill", gradient: "bg-gradient-to-br from-blue-100 to-indigo-100" },
@@ -12,19 +14,15 @@ const moods = [
   { emoji: "🍔", label: "Food Hunt", gradient: "bg-gradient-to-br from-orange-100 to-red-100" },
 ];
 
-const mapEvents = [
-  { title: "Sunset Yoga", host: "Priya", participants: 12, mood: "Chill", moodEmoji: "😌", x: 25, y: 35 },
-  { title: "Dance Party", host: "Maya", participants: 28, mood: "Party", moodEmoji: "🎉", x: 55, y: 20 },
-  { title: "Book Club", host: "Jordan", participants: 6, mood: "Study", moodEmoji: "📚", x: 70, y: 60 },
-  { title: "Taco Crawl", host: "Sam", participants: 15, mood: "Food Hunt", moodEmoji: "🍔", x: 40, y: 70 },
-  { title: "Morning Run", host: "Alex", participants: 8, mood: "Chill", moodEmoji: "😌", x: 15, y: 55 },
-  { title: "Game Night", host: "Chris", participants: 10, mood: "Party", moodEmoji: "🎉", x: 80, y: 40 },
-];
 
 const MapDiscovery = () => {
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
-  const [selectedEvent, setSelectedEvent] = useState<typeof mapEvents[0] | null>(null);
-  const filtered = selectedMood ? mapEvents.filter(e => e.mood === selectedMood) : mapEvents;
+  const [selectedEvent, setSelectedEvent] = useState<any | null>(null);
+  const { data: mapEvents = [], isLoading } = useQuery({
+    queryKey: ['mapEvents', selectedMood],
+    queryFn: () => fetchEvents(selectedMood)
+  });
+  const filtered = mapEvents;
 
   return (
     <DashboardLayout>
